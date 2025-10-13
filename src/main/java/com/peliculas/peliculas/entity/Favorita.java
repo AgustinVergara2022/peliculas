@@ -17,8 +17,8 @@ public class Favorita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String imdbId;
+    @Column(name= "imdb_id",nullable = false, unique = true)
+    private String imdbID;
 
     private String titulo;
     private String director;
@@ -36,12 +36,12 @@ public class Favorita {
         this.id = id;
     }
 
-    public String getImdbId() {
-        return imdbId;
+    public String getImdbID() {
+        return imdbID;
     }
 
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
+    public void setImdbID(String imdbID) {
+        this.imdbID = imdbID;
     }
 
     public String getTitulo() {

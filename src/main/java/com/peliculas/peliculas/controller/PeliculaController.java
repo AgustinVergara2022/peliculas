@@ -2,17 +2,18 @@ package com.peliculas.peliculas.controller;
 
 import com.peliculas.peliculas.dto.PeliculaDto;
 import com.peliculas.peliculas.service.PeliculaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/peliculas")
+@CrossOrigin(value = "http://localhost:4200")
 public class PeliculaController {
+    private static final Logger Logger= LoggerFactory.getLogger(PeliculaController.class);
 
     @Autowired
     private PeliculaService peliculaService;

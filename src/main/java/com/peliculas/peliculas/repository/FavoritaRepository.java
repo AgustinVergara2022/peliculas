@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface FavoritaRepository extends JpaRepository<Favorita, Long> {
 
-    Optional<Favorita> findByImdbId(String imdbId);
+    Optional<Favorita> findByImdbID(String imdbID);
+
+    boolean existsByImdbID(String imdbID);
 
 }

@@ -29,6 +29,7 @@ public class PeliculaDto {
         @JsonProperty("Poster")
         private String poster;
 
+
         public String getImdbID() {
                 return imdbID;
         }
@@ -72,4 +73,7 @@ public class PeliculaDto {
                 this.poster = poster;
         }
 
+         public void setImdbID(String imdbID) {
+            this.imdbID = imdbID;
+        }
 }

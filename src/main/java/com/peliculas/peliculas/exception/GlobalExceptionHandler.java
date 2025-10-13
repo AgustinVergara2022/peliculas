@@ -36,4 +36,13 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(statusCode).body(error);
     }
+
+    @ExceptionHandler(FavoritaExistenteException.class)
+    public ResponseEntity<Map<String, Object>> manejarFavoritaExistente(FavoritaExistenteException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", HttpStatus.CONFLICT.value());
+        error.put("error", "Conflict");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 }
