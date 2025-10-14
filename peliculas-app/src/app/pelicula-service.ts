@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class Pelicula {
+export class PeliculaService {
   private urlBase = 'http://localhost:8080/api/peliculas';
 
   private http = inject(HttpClient);

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/peliculas")
 @CrossOrigin(value = "http://localhost:4200")
@@ -18,7 +20,7 @@ public class PeliculaController {
     @Autowired
     private PeliculaService peliculaService;
 
-    @GetMapping("/buscar")
+    /*@GetMapping("/buscar")
     public Mono<ResponseEntity<PeliculaDto>> buscarPorTitulo(@RequestParam String titulo) {
         return peliculaService.buscarPorTitulo(titulo)
                 .map(pelicula -> {
@@ -28,7 +30,12 @@ public class PeliculaController {
                         return ResponseEntity.notFound().build();
                     }
                 });
+    }*/
+    @GetMapping("/buscar")
+    public Mono<ResponseEntity<List<PeliculaDto>>> buscarPorTitulo(@RequestParam String titulo) {
+        return peliculaService.buscarPorTitulo(titulo)
+                .map(lista -> ResponseEntity.ok(lista))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
-
 
 }

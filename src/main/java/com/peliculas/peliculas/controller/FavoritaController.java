@@ -48,23 +48,27 @@ public class FavoritaController {
         return ResponseEntity.noContent().build();
     }
 
-    // 🔹 Agregar una película a favoritos desde la API externa
+
     @PostMapping("/agregar-por-titulo")
     public Mono<ResponseEntity<Favorita>> guardarPorTitulo(@RequestParam String titulo) {
         return peliculaService.buscarPorTitulo(titulo)
-                .map(dto -> {
-                    if (dto != null && dto.getTitle() != null) {
-                        Favorita favorita = new Favorita();
-                        favorita.setImdbID(dto.getImdbID());
-                        favorita.setTitulo(dto.getTitle());
-                        favorita.setDirector(dto.getDirector());
-                        favorita.setAño(dto.getYear());
-                        favorita.setPoster(dto.getPoster());
-                        Favorita guardada = favoritaService.guardar(favorita);
-                        return ResponseEntity.ok(guardada);
-                    } else {
-                        return ResponseEntity.notFound().build();
+                .map(lista -> {
+                    if (lista != null && !lista.isEmpty()) {
+                        PeliculaDto dto = lista.get(0); // usar el primer resultado (ajustar si necesitas otra lógica)
+                        if (dto != null && dto.getTitle() != null) {
+                            Favorita favorita = new Favorita();
+                            favorita.setImdbID(dto.getImdbID());
+                            favorita.setTitulo(dto.getTitle());
+                            favorita.setDirector(dto.getDirector());
+                            favorita.setAño(dto.getYear());
+                            favorita.setPoster(dto.getPoster());
+                            Favorita guardada = favoritaService.guardar(favorita);
+                            return ResponseEntity.ok(guardada);
+                        }
                     }
+                    return ResponseEntity.notFound().build();
                 });
     }
+
+
 }

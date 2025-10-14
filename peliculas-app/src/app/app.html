@@ -15,10 +15,18 @@
           <a class="nav-link" routerLink="/favoritas" routerLinkActive="active">Favoritas</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar Pelicula" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form>
+    <form class="d-flex" role="search" (submit)="buscarPelicula($event)">
+  <input
+    class="form-control me-2"
+    type="search"
+    placeholder="Buscar Película"
+    aria-label="Search"
+    [(ngModel)]="termino"
+    name="termino"
+  />
+  <button class="btn btn-outline-success" type="submit">Buscar</button>
+</form>
+
     </div>
   </div>
 </nav>
