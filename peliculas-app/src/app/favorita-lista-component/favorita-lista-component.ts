@@ -1,17 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { Favorita } from '../favorita';
 import { FavoritaService } from '../favorita-service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-favorita-lista',
-  imports: [DatePipe],
+  standalone: true,
+  imports: [DatePipe, FormsModule, NgFor, NgIf],
   templateUrl: './favorita-lista.html',
 })
 export class FavoritaListaComponent {
 
   favoritas: Favorita[] = [];
   favoritaService = inject(FavoritaService);
+  router = inject(Router);
 
   ngOnInit(): void {
     this.cargarFavoritas();
@@ -24,11 +29,57 @@ export class FavoritaListaComponent {
     });
   }
 
+  setPuntuacion(favorita: Favorita, valor: number): void {
+    favorita.puntuacion = valor;
+  }
+
   eliminar(id: number): void {
-    this.favoritaService.eliminar(id).subscribe({
-      next: () => this.cargarFavoritas(),
-      error: (err) => console.error('Error al eliminar favorita', err)
+    Swal.fire({
+      title: '¿Eliminar favorita?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.favoritaService.eliminar(id).subscribe({
+          next: () => {
+            this.cargarFavoritas();
+            Swal.fire('Eliminada', 'La película fue eliminada de tus favoritas', 'success');
+          },
+          error: (err) => console.error('Error al eliminar favorita', err)
+        });
+      }
     });
   }
 
+  guardarComentarioYPuntuacion(favorita: Favorita): void {
+    if (!favorita.puntuacion || favorita.puntuacion < 1 || favorita.puntuacion > 5) {
+      Swal.fire('Advertencia', 'Debes seleccionar una puntuación válida entre 1 y 5', 'warning');
+      return;
+    }
+
+    this.favoritaService.actualizar(favorita).subscribe({
+      next: () => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Comentario y puntuación guardados ✅',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      },
+      error: (err) => {
+        console.error('Error al actualizar favorita:', err);
+        Swal.fire('Error', 'No se pudo guardar la información', 'error');
+      }
+    });
+  }
+
+  verDetalle(imdbID: string): void {
+    this.router.navigate(['/pelicula', imdbID]);
+  }
 }

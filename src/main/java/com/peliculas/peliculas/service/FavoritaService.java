@@ -40,4 +40,13 @@ public class FavoritaService {
         favoritaRepository.deleteById(id);
     }
 
+    public Favorita buscarPorId(Long id) {
+        return favoritaRepository.findById(id).orElse(null);
+    }
+
+    public Favorita actualizar(Favorita favorita) {
+        return favoritaRepository.save(favorita);
+    }
+
+
 }

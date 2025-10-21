@@ -41,13 +41,11 @@ public class FavoritaController {
 
     }
 
-    // 🔹 Eliminar una favorita por id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         favoritaService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
-
 
     @PostMapping("/agregar-por-titulo")
     public Mono<ResponseEntity<Favorita>> guardarPorTitulo(@RequestParam String titulo) {
@@ -68,6 +66,21 @@ public class FavoritaController {
                     }
                     return ResponseEntity.notFound().build();
                 });
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Favorita> actualizarFavorita(@PathVariable Long id, @RequestBody Favorita favorita) {
+        Favorita existente = favoritaService.buscarPorId(id);
+        if (existente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Solo se actualizan los campos modificables
+        existente.setComentario(favorita.getComentario());
+        existente.setPuntuacion(favorita.getPuntuacion());
+
+        Favorita actualizada = favoritaService.actualizar(existente);
+        return ResponseEntity.ok(actualizada);
     }
 
 

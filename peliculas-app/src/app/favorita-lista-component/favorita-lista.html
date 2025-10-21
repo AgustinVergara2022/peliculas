@@ -1,38 +1,65 @@
-<div class="container">
-  <div class="container text-center" style="margin: 30px">
-    <h3>Peliculas Favoritas</h3>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let favorita of favoritas">
+      <div class="card bg-dark text-light shadow-sm border-secondary h-100">
+        <div class="card-body">
+          <h5 class="card-title text-warning mb-3">{{ favorita.titulo }}</h5>
+
+            <img 
+          [src]="favorita.poster || 'assets/no-image.png'" 
+          class="card-img-top img-fluid rounded-top"
+          alt="Poster de {{ favorita.titulo }}"
+          style="object-fit: cover; height: 400px;">
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Puntuación:</label>
+            <div>
+              <span 
+                *ngFor="let star of [1,2,3,4,5]" 
+                class="fs-4 me-1"
+                [class.text-warning]="star <= favorita.puntuacion"
+                [class.text-secondary]="star > favorita.puntuacion"
+                (click)="setPuntuacion(favorita, star)"
+                style="cursor: pointer;">
+                ★
+              </span>
+              <span class="ms-2 fw-semibold">{{ favorita.puntuacion || 0 }}/5</span>
+            </div>
+          </div>
+
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Comentario:</label>
+            <textarea 
+              [(ngModel)]="favorita.comentario"
+              class="form-control bg-dark text-light border-secondary"
+              rows="2"
+              maxlength="200"
+              placeholder="Escribe tu opinión..."></textarea>
+          </div>
+
+         
+          <div class="d-flex justify-content-between">
+            <button 
+              class="btn btn-outline-success btn-sm"
+              [disabled]="!favorita.puntuacion"
+              (click)="guardarComentarioYPuntuacion(favorita)">
+              Guardar
+            </button>
+
+            <button 
+              class="btn btn-outline-warning btn-sm"
+              (click)="eliminar(favorita.id)">
+              Eliminar
+            </button>
+          </div>
+        </div>
+
+
+        <div class="card-footer text-muted text-end small">
+          {{ favorita.fechaGuardado | date:'short' }}
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <table class="table table-striped table-hover align-middle">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Imbd</th>
-      <th scope="col">Titulo</th>
-      <th scope="col">Año</th>
-      <th scope="col">Director</th>
-      <th scope="col">Sinopsis</th>
-      <th scope="col">Poster</th>
-      <th scope="col">Puntuacion</th>
-      <th scope="col">Comentario</th>
-      <th scope="col">Fecha Guardado</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for(favorita of favoritas; track favorita.id){
-      <tr>
-        <th scope="row">{{favorita.id}}</th>
-        <td>{{favorita.imdbID}}</td>
-        <td>{{favorita.titulo}}</td>
-        <td>{{favorita.anio}}</td>
-        <td>{{favorita.director}}</td>
-        <td>{{favorita.sinopsis}}</td>
-        <td><img src="{{favorita.poster}}" alt="Poster" width="50"></td>
-        <td>{{favorita.puntuacion}}</td>
-        <td>{{favorita.comentario}}</td>
-        <td>{{favorita.fechaGuardado | date:'short'}}</td>
-      </tr>
-    }
-  </tbody>
-</table>
 </div>

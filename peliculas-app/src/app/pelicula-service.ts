@@ -13,4 +13,9 @@ export class PeliculaService {
   buscarPorTitulo(titulo: string): Observable<any> {
     return this.http.get<any>(`${this.urlBase}/buscar?titulo=${titulo}`);
   }
+
+  buscarPorId(id: string): Observable<any> {
+  return this.http.get<any>(`${this.urlBase}/detalle/${id}`);
+}
+
 }

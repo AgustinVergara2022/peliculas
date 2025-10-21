@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PeliculaService } from '../pelicula-service';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +15,8 @@ export class BuscarComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private peliculaService: PeliculaService
+    private peliculaService: PeliculaService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,4 +41,14 @@ export class BuscarComponent implements OnInit {
       }
     });
   }
+
+  verDetalle(imdbID: string) {
+  if (imdbID) {
+    this.router.navigate(['/pelicula', imdbID]);
+  } else {
+    console.error('⚠️ ID de película no válido');
+  }
+}
+
+
 }

@@ -38,4 +38,17 @@ public class PeliculaController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/detalle/{id}")
+    public Mono<ResponseEntity<PeliculaDto>> obtenerDetallePorId(@PathVariable String id) {
+        return peliculaService.obtenerDetallePorId(id)
+                .map(pelicula -> {
+                    if (pelicula.getTitle() != null) {
+                        return ResponseEntity.ok(pelicula);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                });
+    }
+
+
 }

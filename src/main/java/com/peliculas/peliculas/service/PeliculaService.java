@@ -42,18 +42,30 @@ package com.peliculas.peliculas.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.peliculas.peliculas.dto.PeliculaDto;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class PeliculaService {
 
+    private static final Logger logger = LoggerFactory.getLogger(PeliculaService.class);
+
     private final WebClient webClient = WebClient.create();
-    private final String apiKey = "806e070a"; // reemplazá con tu clave
+
+    @Value("${omdb.api.url}")
+    private String apiUrl;
+
+    @Value("${omdb.api.key}")
+    private String apiKey;
+
+
 
     public Mono<List<PeliculaDto>> buscarPorTitulo(String titulo) {
         String url = "https://www.omdbapi.com/?apikey=" + apiKey + "&s=" + titulo;
@@ -68,6 +80,7 @@ public class PeliculaService {
                     if (json.has("Search")) {
                         for (JsonNode item : json.get("Search")) {
                             PeliculaDto dto = new PeliculaDto();
+                            dto.setImdbID(item.path("imdbID").asText());
                             dto.setTitle(item.path("Title").asText());
                             dto.setYear(item.path("Year").asText());
                             dto.setPoster(item.path("Poster").asText());
@@ -78,6 +91,20 @@ public class PeliculaService {
                     return resultados;
                 });
     }
+
+    public Mono<PeliculaDto> obtenerDetallePorId(String id) {
+        String url = String.format("%s?apikey=%s&i=%s", apiUrl, apiKey, id);
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(PeliculaDto.class)
+                .doOnNext(pelicula -> logger.info("Detalle obtenido para {}: {}", id, pelicula.getTitle()))
+                .onErrorResume(e -> {
+                    logger.error("Error obteniendo detalle de película con ID {}: {}", id, e.getMessage());
+                    return Mono.empty();
+                });
+    }
+
 }
 
 

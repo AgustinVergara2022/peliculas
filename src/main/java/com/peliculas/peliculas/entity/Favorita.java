@@ -23,6 +23,7 @@ public class Favorita {
     private String titulo;
     private String director;
     private String año;
+    private String genero;
     private String poster;
     private Integer puntuacion;
     private String comentario;
@@ -98,5 +99,12 @@ public class Favorita {
 
     public void setFechaGuardado(LocalDateTime fechaGuardado) {
         this.fechaGuardado = fechaGuardado;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 }

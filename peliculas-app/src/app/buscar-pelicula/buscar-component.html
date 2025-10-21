@@ -13,21 +13,22 @@
     </div>
   }
 
-  @if (!cargando && resultados.length > 0) {
-    <div class="row">
-      <div *ngFor="let pelicula of resultados" class="col-md-3 mb-4">
-        <div class="card h-100">
+@if (!cargando && resultados.length > 0) {
+  <div class="row">
+    @for (pelicula of resultados; track pelicula.imdbID) {
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm" (click)="verDetalle(pelicula.imdbID)" style="cursor: pointer;">
           <img
             [src]="pelicula.Poster !== 'N/A' ? pelicula.Poster : 'assets/no-image.png'"
             class="card-img-top"
             alt="{{ pelicula.Title }}"
           />
-          <div class="card-body">
+          <div class="card-body text-center">
             <h5 class="card-title">{{ pelicula.Title }}</h5>
-            <p class="card-text">{{ pelicula.Year }}</p>
+            <p class="card-text text-muted">{{ pelicula.Year }}</p>
           </div>
         </div>
       </div>
-    </div>
-  }
-</div>
+    }
+  </div>
+}

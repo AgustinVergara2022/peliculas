@@ -29,6 +29,9 @@ public class PeliculaDto {
         @JsonProperty("Poster")
         private String poster;
 
+        @JsonProperty("Genre")
+        private String genre;
+
 
         public String getImdbID() {
                 return imdbID;
@@ -75,5 +78,12 @@ public class PeliculaDto {
 
          public void setImdbID(String imdbID) {
             this.imdbID = imdbID;
+        }
+
+        public String getGenre() {
+                return genre;
+        }
+        public void setGenre(String genre) {
+                this.genre = genre;
         }
 }

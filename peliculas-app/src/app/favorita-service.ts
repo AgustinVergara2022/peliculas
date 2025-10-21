@@ -14,11 +14,18 @@ export class FavoritaService {
     return this.http.get<any[]>(this.urlBase);
   }
 
+
   agregarPorTitulo(titulo: string): Observable<any> {
-    return this.http.post<any>(`${this.urlBase}/agregar-por-titulo?titulo=${titulo}`, {});
+    return this.http.post<any>(`${this.urlBase}/agregar-por-titulo?titulo=${encodeURIComponent(titulo)}`, {});
   }
 
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.urlBase}/${id}`);
   }
+
+ actualizar(favorita: any): Observable<any> {
+  return this.http.put<any>(`${this.urlBase}/${favorita.id}`, favorita);
+}
+
+
 }
