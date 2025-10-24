@@ -1,26 +1,81 @@
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
   <div class="carousel-inner">
+
+    <!-- INCEPTION -->
     <div class="carousel-item active">
-      <img src="assets/posters/inception.jpg" class="d-block w-100" alt="Inception">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Inception</h5>
-        <p>Tu mente es la escena del crimen.</p>
+      <div class="movie-slide d-flex align-items-center justify-content-center text-light">
+        <img src="/posters/inception-bg.jpg" class="bg-image" alt="Inception Background">
+        <div class="overlay"></div>
+
+        <div class="container d-flex align-items-center justify-content-center">
+          <div class="row w-100">
+            <div class="col-md-4 text-center">
+              <img src="/posters/inception.jpg" class="poster img-fluid rounded shadow-lg" alt="Inception Poster">
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center">
+              <h2 class="fw-bold">Inception <span class="text-muted fs-5">(2010)</span></h2>
+              <p class="fst-italic text-secondary">"Tu mente es la escena del crimen."</p>
+              <p>
+                Cobb, un ladrón experto que se infiltra en los sueños para robar secretos,
+                recibe la tarea imposible de implantar una idea en la mente de alguien.
+              </p>
+              <button class="btn btn-outline-light btn-sm mt-2" (click)="verDetalle('tt1375666')">Ver más</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- INTERSTELLAR -->
     <div class="carousel-item">
-      <img src="assets/posters/interstellar.jpg" class="d-block w-100" alt="Interstellar">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Interstellar</h5>
-        <p>El amor trasciende el espacio y el tiempo.</p>
+      <div class="movie-slide d-flex align-items-center justify-content-center text-light">
+        <img src="/posters/interstellar-bg.jpg" class="bg-image" alt="Interstellar Background">
+        <div class="overlay"></div>
+
+        <div class="container d-flex align-items-center justify-content-center">
+          <div class="row w-100">
+            <div class="col-md-4 text-center">
+              <img src="/posters/interstellar.jpg" class="poster img-fluid rounded shadow-lg" alt="Interstellar Poster">
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center">
+              <h2 class="fw-bold">Interstellar <span class="text-muted fs-5">(2014)</span></h2>
+              <p class="fst-italic text-secondary">"Amor es lo único que trasciende el tiempo y el espacio."</p>
+              <p>
+                Un grupo de exploradores viaja a través de un agujero de gusano en el espacio
+                para asegurar el futuro de la humanidad.
+              </p>
+              <button class="btn btn-outline-light btn-sm mt-2" (click)="verDetalle('tt0816692')">Ver más</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- THE DARK KNIGHT -->
     <div class="carousel-item">
-      <img src="assets/posters/dark-knight.jpg" class="d-block w-100" alt="The Dark Knight">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>The Dark Knight</h5>
-        <p>Algunos hombres solo quieren ver el mundo arder.</p>
+      <div class="movie-slide d-flex align-items-center justify-content-center text-light">
+        <img src="/posters/darkknight-bg.jpg" class="bg-image" alt="The Dark Knight Background">
+        <div class="overlay"></div>
+
+        <div class="container d-flex align-items-center justify-content-center">
+          <div class="row w-100">
+            <div class="col-md-4 text-center">
+              <img src="/posters/darkknight.jpg" class="poster img-fluid rounded shadow-lg" alt="The Dark Knight Poster">
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center">
+              <h2 class="fw-bold">The Dark Knight <span class="text-muted fs-5">(2008)</span></h2>
+              <p class="fst-italic text-secondary">"O mueres como un héroe o vives lo suficiente para verte convertido en villano."</p>
+              <p>
+                Batman enfrenta su mayor desafío cuando el Joker desata el caos en Ciudad Gótica,
+                poniendo a prueba los límites morales del héroe.
+              </p>
+              <button class="btn btn-outline-light btn-sm mt-2" (click)="verDetalle('tt0468569')">Ver más</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
