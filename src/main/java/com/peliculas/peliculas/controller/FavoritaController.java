@@ -58,7 +58,7 @@ public class FavoritaController {
                             favorita.setImdbID(dto.getImdbID());
                             favorita.setTitulo(dto.getTitle());
                             favorita.setDirector(dto.getDirector());
-                            favorita.setAño(dto.getYear());
+                            favorita.setAnio(dto.getYear());
                             favorita.setPoster(dto.getPoster());
                             Favorita guardada = favoritaService.guardar(favorita);
                             return ResponseEntity.ok(guardada);
@@ -81,6 +81,18 @@ public class FavoritaController {
 
         Favorita actualizada = favoritaService.actualizar(existente);
         return ResponseEntity.ok(actualizada);
+    }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<Favorita>> filtrarPorAnio(@RequestParam String anio) {
+        List<Favorita> filtradas = favoritaService.filtrarPorAnio(anio);
+        return ResponseEntity.ok(filtradas);
+    }
+
+    @GetMapping("/ordenadas")
+    public ResponseEntity<List<Favorita>> ordenarPor(@RequestParam("por") String campo) {
+        List<Favorita> favoritas = favoritaService.ordenarPor(campo);
+        return ResponseEntity.ok(favoritas);
     }
 
 

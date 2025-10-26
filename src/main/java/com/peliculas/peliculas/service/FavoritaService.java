@@ -4,6 +4,7 @@ import com.peliculas.peliculas.entity.Favorita;
 import com.peliculas.peliculas.exception.FavoritaExistenteException;
 import com.peliculas.peliculas.repository.FavoritaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,6 +47,21 @@ public class FavoritaService {
 
     public Favorita actualizar(Favorita favorita) {
         return favoritaRepository.save(favorita);
+    }
+
+    public List<Favorita> filtrarPorAnio(String anio) {
+        return favoritaRepository.findByAnio(anio);
+    }
+
+    public List<Favorita> ordenarPor(String campo) {
+        switch (campo.toLowerCase()) {
+            case "titulo":
+                return favoritaRepository.findAll(Sort.by(Sort.Direction.ASC, "titulo"));
+            case "anio":
+                return favoritaRepository.findAllOrderByAnioNumerico();
+            default:
+                return favoritaRepository.findAll();
+        }
     }
 
 

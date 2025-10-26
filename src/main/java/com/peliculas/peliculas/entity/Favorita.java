@@ -1,5 +1,6 @@
 package com.peliculas.peliculas.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,9 @@ public class Favorita {
 
     private String titulo;
     private String director;
-    private String año;
+    @JsonProperty("anio")
+    @Column(name = "anio")
+    private String anio;
     private String genero;
     private String poster;
     private Integer puntuacion;
@@ -61,12 +64,12 @@ public class Favorita {
         this.director = director;
     }
 
-    public String getAño() {
-        return año;
+    public String getAnio() {
+        return anio;
     }
 
-    public void setAño(String año) {
-        this.año = año;
+    public void setAnio(String anio) {
+        this.anio = anio;
     }
 
     public String getPoster() {

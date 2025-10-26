@@ -1,10 +1,33 @@
+<div class="container mt-3" *ngIf="mensaje">
+  <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+    {{ mensaje }}
+  </div>
+</div>
+
 <div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <label class="me-2 fw-bold">Filtrar por año:</label>
+    <input type="number" class="form-control d-inline-block w-auto me-2" #anioFiltro>
+    <button class="btn btn-outline-primary btn-sm" (click)="filtrarPorAnio(anioFiltro.valueAsNumber)">Filtrar</button>
+  </div>
+
+  <div>
+    <label class="me-2 fw-bold">Ordenar por:</label>
+    <select #ordenSelect class="form-select d-inline-block w-auto" (change)="ordenarPor(ordenSelect.value)">
+      <option value="">Seleccionar</option>
+      <option value="titulo">Título</option>
+      <option value="anio">Año</option>
+    </select>
+  </div>
+</div>
   <div class="row">
     <div class="col-md-4 mb-4" *ngFor="let favorita of favoritas">
       <div class="card bg-dark text-light shadow-sm border-secondary h-100">
         <div class="card-body">
           <h5 class="card-title text-warning mb-3">{{ favorita.titulo }}</h5>
-
+          
+          <p class="text-secondary mb-3">({{ favorita.anio || 'Año desconocido' }})</p>
             <img 
           [src]="favorita.poster || 'assets/no-image.png'" 
           class="card-img-top img-fluid rounded-top"

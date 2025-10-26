@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Favorita } from './favorita';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,16 @@ export class FavoritaService {
 
  actualizar(favorita: any): Observable<any> {
   return this.http.put<any>(`${this.urlBase}/${favorita.id}`, favorita);
-}
+  }
+
+  filtrarPorAnio(anio: number): Observable<Favorita[]> {
+  return this.http.get<Favorita[]>(`${this.urlBase}/filtrar?anio=${anio}`);
+  }
+
+  ordenarPor(campo: string): Observable<Favorita[]> {
+  return this.http.get<Favorita[]>(`${this.urlBase}/ordenadas?por=${campo}`);
+  }
+
 
 
 }

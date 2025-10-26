@@ -15,9 +15,33 @@ import { CommonModule } from '@angular/common';
 
 export class App {
   termino: string = '';
+  currentTheme: 'light' | 'dark' = 'dark';
+  
+
+  
 
   constructor(private router: Router) {}
 
+  ngOnInit() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      this.currentTheme = savedTheme as 'light' | 'dark';
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.currentTheme = prefersDark ? 'dark' : 'light';
+    }
+    this.updateTheme();
+  }
+
+  toggleTheme() {
+    this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', this.currentTheme);
+    this.updateTheme();
+  }
+
+  updateTheme() {
+    document.documentElement.setAttribute('data-bs-theme', this.currentTheme);
+  }
   onSearch(event: Event) {
     event.preventDefault();
     if (this.termino.trim() !== '') {
@@ -33,5 +57,6 @@ export class App {
       this.termino = '';
     }
   }
+
 }
 

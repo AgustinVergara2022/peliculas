@@ -3,6 +3,7 @@ import { FavoritaListaComponent } from './favorita-lista-component/favorita-list
 import { HomeComponent } from './home-component/home-component';
 import { BuscarComponent } from './buscar-pelicula/buscar-component';
 import { PeliculaDetalleComponent } from './pelicula-detalle/pelicula-detalle';
+import { SobreMiComponent } from './sobre-mi-component/sobre-mi-component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },

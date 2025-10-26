@@ -18,6 +18,8 @@ export class FavoritaListaComponent {
   favoritaService = inject(FavoritaService);
   router = inject(Router);
 
+  mensaje: string = '';
+
   ngOnInit(): void {
     this.cargarFavoritas();
   }
@@ -81,5 +83,38 @@ export class FavoritaListaComponent {
 
   verDetalle(imdbID: string): void {
     this.router.navigate(['/pelicula', imdbID]);
+  }
+
+  filtrarPorAnio(anio: number): void {
+    if (isNaN(anio) || anio < 0) {
+    this.mensaje = '⚠️ Por favor ingresa un año válido (0 o mayor).';
+    setTimeout(() => this.mensaje = '', 3000); // se borra a los 3 segundos
+    return;
+  }
+
+  this.favoritaService.filtrarPorAnio(anio).subscribe({
+    next: data => {
+      this.favoritas = data;
+      this.mensaje = data.length
+        ? `✅ Se encontraron ${data.length} películas del año ${anio} o posterior.`
+        : `❌ No se encontraron películas a partir del año ${anio}.`;
+      setTimeout(() => this.mensaje = '', 3000);
+    },
+    error: err => this.manejarError(err)
+  });
+  }
+
+  ordenarPor(campo: string): void {
+    if (!campo) return;
+
+  this.favoritaService.ordenarPor(campo).subscribe({
+    next: data => this.favoritas = data,
+    error: err => this.manejarError(err)
+  });
+  }
+
+  manejarError(err: any): void {
+    console.error('Error en la solicitud:', err);
+    Swal.fire('Error', 'Ocurrió un error al procesar la solicitud. Intenta nuevamente más tarde.', 'error');
   }
 }

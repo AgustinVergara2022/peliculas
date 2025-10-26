@@ -1,0 +1,134 @@
+/* 🎨 --- SWITCH MODO CLARO/OSCURO --- */
+.theme-switch {
+  width: 55px;
+  height: 28px;
+  background-color: var(--bs-border-color-translucent);
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.switch {
+  width: 22px;
+  height: 22px;
+  background-color: var(--bs-body-bg);
+  border-radius: 50%;
+  position: absolute;
+  left: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switch.active {
+  left: 29px;
+}
+
+.sun, .moon {
+  position: absolute;
+  font-size: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.sun {
+  color: #f1c40f;
+  left: 7px;
+  opacity: 0;
+}
+
+.moon {
+  color: #ffffff;
+  right: 7px;
+  opacity: 1;
+}
+
+.switch.active .sun {
+  opacity: 1;
+}
+
+.switch.active .moon {
+  opacity: 0;
+}
+
+/* 🌗 Transición global para cambio de tema */
+html {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* ========================================================= */
+/* 🧭 NAVBAR ADAPTATIVA POR TEMA (FUNCIONA CON Bootstrap 5.3) */
+/* ========================================================= */
+
+/* --- MODO OSCURO --- */
+[data-bs-theme="dark"] .navbar {
+  --bs-navbar-color: #f8f9fa;
+  --bs-navbar-hover-color: #ffc107;
+  --bs-navbar-brand-color: #f8f9fa;
+  --bs-navbar-brand-hover-color: #ffc107;
+  background-color: #212529 !important;
+  border-bottom: 1px solid #343a40;
+}
+
+/* --- MODO CLARO --- */
+[data-bs-theme="light"] .navbar {
+  --bs-navbar-color: #212529;
+  --bs-navbar-hover-color: #0d6efd;
+  --bs-navbar-brand-color: #212529;
+  --bs-navbar-brand-hover-color: #0d6efd;
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* ========================================================= */
+/* ✨ EFECTOS GENERALES DE TRANSICIÓN Y ESTÉTICA GLOBAL */
+/* ========================================================= */
+
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* --- Tarjetas y sombras suaves --- */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Botones --- */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* --- Inputs (para mantener consistencia en temas claros/oscuros) --- */
+[data-bs-theme="dark"] .form-control {
+  background-color: #2c2f33;
+  color: #f8f9fa;
+  border-color: #444;
+}
+
+[data-bs-theme="light"] .form-control {
+  background-color: #fff;
+  color: #212529;
+  border-color: #ced4da;
+}
+
+/* --- Ajuste de colores para los iconos del switch --- */
+[data-bs-theme="light"] .theme-switch {
+  background-color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .theme-switch {
+  background-color: #495057;
+}
