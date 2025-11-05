@@ -3,9 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Favorita } from './favorita';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class FavoritaService {
    private urlBase = 'http://localhost:8080/api/favoritas';
 

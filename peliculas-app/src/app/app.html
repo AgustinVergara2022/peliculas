@@ -1,34 +1,61 @@
 <div class="container">
-    <nav class="navbar bg-dark navbar-expand-lg"
-  class="navbar navbar-expand-lg shadow-sm mb-4"
-  [ngClass]="{
-    'navbar-dark bg-dark border-bottom': currentTheme === 'dark',
-    'navbar-light bg-light border-bottom': currentTheme === 'light'
-  }"
->
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">MovieTracker</a>
+    <nav class="navbar navbar-expand-lg shadow-sm mb-4"
+      [ngClass]="{
+        'navbar-dark bg-dark border-bottom': currentTheme === 'dark',
+        'navbar-light bg-light border-bottom': currentTheme === 'light'
+      }"
+    >
+      <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold" href="#"></a>
 
-    <ul class="navbar-nav me-auto">
-      <li class="nav-item"><a routerLink="/" class="nav-link">Inicio</a></li>
-      <li class="nav-item"><a routerLink="/favoritas" class="nav-link">Favoritas</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/sobre-mi">Acerca</a></li>
-    </ul>
+        <!-- Menú principal -->
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a routerLink="/" class="nav-link">Inicio</a></li>
+          <li class="nav-item"><a routerLink="/favoritas" class="nav-link">Favoritas</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/sobre-mi">Acerca</a></li>
+        </ul>
 
-    <form class="d-flex me-3" role="search" (submit)="buscarPelicula($event)">
-      <input class="form-control me-2" type="search" placeholder="Buscar Película" name="termino" [(ngModel)]="termino">
-      <button class="btn btn-outline-success" type="submit">Buscar</button>
-    </form>
+        <!-- Búsqueda -->
+        <form class="d-flex me-4" role="search" (submit)="buscarPelicula($event)">
+          <input class="form-control me-2" type="search" placeholder="Buscar Película" name="termino" [(ngModel)]="termino">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
 
-    <!-- Switch de modo claro/oscuro -->
-    <div class="theme-switch" (click)="toggleTheme()">
-      <div class="switch" [class.active]="currentTheme === 'light'">
-        <i class="bi bi-sun-fill sun"></i>
-        <i class="bi bi-moon-fill moon"></i>
+        <!-- Controles de usuario y tema -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Switch de modo claro/oscuro -->
+          <div class="theme-switch-wrapper" title="Cambiar tema">
+            <div class="theme-switch" (click)="toggleTheme()">
+              <div class="switch" [class.active]="currentTheme === 'light'">
+                <i class="bi bi-sun-fill sun"></i>
+                <i class="bi bi-moon-fill moon"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Separador visual -->
+          <div class="vr" [class.bg-light]="currentTheme === 'dark'" 
+                        [class.bg-dark]="currentTheme === 'light'"></div>
+
+          <!-- Login/Logout -->
+          <div class="auth-buttons">
+            <a *ngIf="!auth.isLoggedIn()" 
+               routerLink="/login" 
+               class="btn btn-outline-primary btn-sm">
+              <i class="bi bi-box-arrow-in-right me-1"></i>
+              Login
+            </a>
+            <button *ngIf="auth.isLoggedIn()" 
+                    class="btn btn-outline-danger btn-sm" 
+                    (click)="logout()">
+              <i class="bi bi-box-arrow-right me-1"></i>
+              Logout
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</nav>
+    </nav>
 </div>
 
 <div class="container">
@@ -43,10 +70,22 @@
 
   <small>
     Desarrollado por <strong>Agustín Vergara</strong> — 2025<br>
-    📧 <a href="mailto:agusvergara@gmail.com" class="text-decoration-none text-info">agustinvergara215@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/vergaraagustin/" target="_blank" class="text-decoration-none text-info">
+    📧 <a href="mailto:agustinvergara215@gmail.com" 
+          class="text-decoration-none"
+          [class.text-info]="currentTheme === 'dark'"
+          [class.text-primary]="currentTheme === 'light'">
+      agustinvergara215@gmail.com
+    </a><br>
+    🔗 <a href="https://www.linkedin.com/in/vergaraagustin/" 
+          target="_blank" 
+          class="text-decoration-none"
+          [class.text-info]="currentTheme === 'dark'"
+          [class.text-primary]="currentTheme === 'light'">
       LinkedIn
     </a><br>
-    📱 <span class="text-info">+54 3435 418295</span>
+    📱 <span [class.text-info]="currentTheme === 'dark'"
+             [class.text-primary]="currentTheme === 'light'">
+      +54 3435 418295
+    </span>
   </small>
 </footer>

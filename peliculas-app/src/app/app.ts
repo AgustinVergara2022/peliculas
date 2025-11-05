@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './auth-service';
 //import { FavoritaListaComponent } from "./favorita-lista-component/favorita-lista-component";
 
 @Component({
@@ -20,7 +21,7 @@ export class App {
 
   
 
-  constructor(private router: Router) {}
+  constructor(public auth: AuthService, private router: Router) {}
 
   ngOnInit() {
     const savedTheme = localStorage.getItem('theme');
@@ -57,6 +58,8 @@ export class App {
       this.termino = '';
     }
   }
+
+  logout(){ this.auth.logout(); this.router.navigate(['/']); }
 
 }
 
