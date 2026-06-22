@@ -2,25 +2,23 @@ MovieTracker es una aplicación web full stack desarrollada para buscar películ
 
 Tecnologías utilizadas
 Backend
-Java 17
-Spring Boot 3
-Spring Web
-Spring Data JPA
-Spring Security
-JWT (JSON Web Tokens)
-Hibernate
-Lombok
-MySQL
-Maven
+•	Java 17
+•	Spring Boot 3
+•	Spring Web
+•	Spring Data JPA
+•	Spring Security
+•	JWT (JSON Web Tokens)
+•	Hibernate
+•	Lombok
+•	MySQL
+•	Maven
 Frontend
-Angular
-TypeScript
-Bootstrap 5
-RxJS
-Angular Router
-Angular Forms
-APIs Externas
-OMDb API (Open Movie Database)
+•	Angular
+•	TypeScript
+•	Bootstrap 5
+•	APIs Externas
+•	OMDb API (Open Movie Database)
+
 ---------------------------------------------------------------------------------------------------------------------
 Funcionalidades principales
 Búsqueda de películas
