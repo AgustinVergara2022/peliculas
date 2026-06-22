@@ -20,6 +20,7 @@ public class UsuarioService {
         Usuario u = new Usuario();
         u.setUsername(username);
         u.setPasswordHash(encoder.encode(password));
+        u.setRole("USER");
         return repo.save(u);
     }
 
@@ -27,5 +28,16 @@ public class UsuarioService {
         Usuario u = repo.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Credenciales inválidas"));
         if (!encoder.matches(rawPassword, u.getPasswordHash())) throw new IllegalArgumentException("Credenciales inválidas");
         return u;
+    }
+
+    public String obtenerRol(String username) {
+        return repo.findByUsername(username)
+                .map(Usuario::getRole)
+                .orElse("USER");
+    }
+
+    public Usuario buscarPorUsername(String username) {
+        return repo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 }

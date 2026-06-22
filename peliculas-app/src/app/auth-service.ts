@@ -10,14 +10,30 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http.post<{token:string, username:string}>(`${this.base}/login`, {username, password})
-      .pipe(tap(res => localStorage.setItem('token', res.token)));
+      .pipe(tap(res => {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('username', res.username);
+      }));
   }
 
   register(username: string, password: string) {
     return this.http.post(`${this.base}/register`, {username, password});
   }
 
-  logout() { localStorage.removeItem('token'); }
+  logout() { 
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+  }
+
   isLoggedIn() { return !!localStorage.getItem('token'); }
   getToken() { return localStorage.getItem('token'); }
+
+  getUser() {
+  return localStorage.getItem('user');
+  }
+
+  getPerfil() {
+  return this.http.get(`${this.base}/perfil`);
+  }
+
 }

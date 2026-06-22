@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/favoritas")
@@ -47,25 +48,31 @@ public class FavoritaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/agregar-por-titulo")
-    public Mono<ResponseEntity<Favorita>> guardarPorTitulo(@RequestParam String titulo) {
-        return peliculaService.buscarPorTitulo(titulo)
+    @PostMapping("/agregar")
+    public ResponseEntity<Favorita> guardarPorTitulo(@RequestBody Map<String, String> body) {
+        String titulo = body.get("titulo");
+        if (titulo == null || titulo.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return (ResponseEntity<Favorita>) peliculaService.buscarPorTitulo(titulo)
                 .map(lista -> {
                     if (lista != null && !lista.isEmpty()) {
-                        PeliculaDto dto = lista.get(0); // usar el primer resultado (ajustar si necesitas otra lógica)
-                        if (dto != null && dto.getTitle() != null) {
-                            Favorita favorita = new Favorita();
-                            favorita.setImdbID(dto.getImdbID());
-                            favorita.setTitulo(dto.getTitle());
-                            favorita.setDirector(dto.getDirector());
-                            favorita.setAnio(dto.getYear());
-                            favorita.setPoster(dto.getPoster());
-                            Favorita guardada = favoritaService.guardar(favorita);
-                            return ResponseEntity.ok(guardada);
-                        }
+                        var dto = lista.get(0);
+                        var favorita = new Favorita();
+                        favorita.setImdbID(dto.getImdbID());
+                        favorita.setTitulo(dto.getTitle());
+                        favorita.setDirector(dto.getDirector());
+                        favorita.setAnio(dto.getYear());
+                        favorita.setPoster(dto.getPoster());
+                        var guardada = favoritaService.guardar(favorita);
+                        // 201 Created
+                        return ResponseEntity.status(201).body(guardada);
                     }
-                    return ResponseEntity.notFound().build();
-                });
+                    // 404 si OMDb no devuelve nada
+                    return ResponseEntity.status(404).build();
+                })
+                .block(); // si tu controller no es reactivo, terminá el Mono
     }
 
     @PutMapping("/{id}")

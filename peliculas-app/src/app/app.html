@@ -7,13 +7,14 @@
     >
       <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand fw-bold" href="#"></a>
+        <a class="navbar-brand fw-bold" href="#">MovieTracker</a>
 
         <!-- Menú principal -->
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a routerLink="/" class="nav-link">Inicio</a></li>
           <li class="nav-item"><a routerLink="/favoritas" class="nav-link">Favoritas</a></li>
           <li class="nav-item"><a class="nav-link" routerLink="/sobre-mi">Acerca</a></li>
+          <li class="nav-item" *ngIf="auth.isLoggedIn()"><a class="nav-link" routerLink="/perfil" style="cursor:pointer;">Perfil{{auth.getUser()}}</a></li>
         </ul>
 
         <!-- Búsqueda -->
@@ -38,14 +39,18 @@
           <div class="vr" [class.bg-light]="currentTheme === 'dark'" 
                         [class.bg-dark]="currentTheme === 'light'"></div>
 
-          <!-- Login/Logout -->
+          <!-- Login/Registro/Logout -->
           <div class="auth-buttons">
-            <a *ngIf="!auth.isLoggedIn()" 
-               routerLink="/login" 
-               class="btn btn-outline-primary btn-sm">
-              <i class="bi bi-box-arrow-in-right me-1"></i>
-              Login
-            </a>
+            <div *ngIf="!auth.isLoggedIn()" class="d-flex gap-2">
+              <a routerLink="/login" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-box-arrow-in-right me-1"></i>
+                Login
+              </a>
+              <a routerLink="/registro" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-person-plus me-1"></i>
+                Registrarse
+              </a>
+            </div>
             <button *ngIf="auth.isLoggedIn()" 
                     class="btn btn-outline-danger btn-sm" 
                     (click)="logout()">
@@ -57,6 +62,7 @@
       </div>
     </nav>
 </div>
+
 
 <div class="container">
   <router-outlet></router-outlet>

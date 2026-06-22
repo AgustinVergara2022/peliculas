@@ -6,6 +6,7 @@ import { PeliculaDetalleComponent } from './pelicula-detalle/pelicula-detalle';
 import { SobreMiComponent } from './sobre-mi-component/sobre-mi-component';
 import { authGuard } from './guards/auth-guard';
 import { LoginComponent } from './auth/login-component';
+import { PerfilComponent } from './perfil-component/perfil-component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -14,5 +15,7 @@ export const routes: Routes = [
     { path: 'pelicula/:id', component: PeliculaDetalleComponent },
     {path: 'sobre-mi', component: SobreMiComponent},
     { path: 'login', component: LoginComponent },
+    {path: 'registro', loadComponent: () => import('./registro-component/registro-component').then(m => m.RegistroComponent)},
+    {path: 'perfil', component: PerfilComponent},
     { path: '**', redirectTo: '' }
 ];

@@ -32,4 +32,39 @@ public class AuthController {
         String token = jwt.generarToken(u.getUsername(), u.getRole());
         return ResponseEntity.ok(Map.of("token", token, "username", u.getUsername()));
     }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@RequestBody Map<String, String> body) {
+        String oldToken = body.get("token");
+        String username = jwt.extraerUsername(oldToken);
+
+        if (!jwt.esTokenValido(oldToken, username))
+            return ResponseEntity.status(401).body(Map.of("error", "Token inválido"));
+
+        String newToken = jwt.generarToken(username, usuarioService.obtenerRol(username));
+        return ResponseEntity.ok(Map.of("token", newToken));
+    }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<?> perfil(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            String username = jwt.extraerUsername(token);
+            var user = usuarioService.buscarPorUsername(username);
+
+            if (user == null) {
+                return ResponseEntity.status(404).body(Map.of("error", "Usuario no encontrado"));
+            }
+
+            return ResponseEntity.ok(Map.of(
+                    "username", user.getUsername(),
+                    "rol", user.getRole()
+            ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(Map.of("error", "Error interno del servidor"));
+        }
+    }
+
+
 }

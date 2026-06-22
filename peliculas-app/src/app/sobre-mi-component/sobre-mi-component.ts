@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SobreMiComponent {
   info: any = {};
-
+  
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -19,4 +19,5 @@ export class SobreMiComponent {
       this.info = data;
     });
   }
+
 }

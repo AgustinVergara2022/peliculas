@@ -15,7 +15,7 @@ export class FavoritaService {
 
 
   agregarPorTitulo(titulo: string): Observable<any> {
-    return this.http.post<any>(`${this.urlBase}/agregar-por-titulo?titulo=${encodeURIComponent(titulo)}`, {});
+  return this.http.post<any>(`${this.urlBase}/agregar`, { titulo });
   }
 
   eliminar(id: number): Observable<void> {

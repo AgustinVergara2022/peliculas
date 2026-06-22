@@ -17,14 +17,12 @@ public class JwtUtil {
     @Value("${security.jwt.expiration}") private long expiration;
 
     public String generarToken(String username, String role) {
-        Date now = new Date();
-        Date exp = new Date(now.getTime() + expiration);
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)
-                .setIssuedAt(now)
-                .setExpiration(exp)
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -38,4 +36,55 @@ public class JwtUtil {
     public String getUsername(String token) {
         return validarYParsear(token).getBody().getSubject();
     }
+
+    public String generarRefreshToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 604800000)) // 7 días
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
+    public String extraerUsername(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public String extraerRol(String token) {
+        return (String) Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role");
+    }
+
+    public boolean esTokenValido(String token, String username) {
+        String tokenUsername = extraerUsername(token);
+        return tokenUsername.equals(username) && !estaExpirado(token);
+    }
+
+    private boolean estaExpirado(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration()
+                .before(new Date());
+    }
+
+    // Obtener claims
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
 }
